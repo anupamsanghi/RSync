@@ -37,10 +37,10 @@ def createDiff(C, X, Y,i,j, arr):
     else:
         if j > 0 and (i == 0 or C[i][j-1] >= C[i-1][j]):
             createDiff(C, X, Y, i, j-1,arr)
-            diff.append("+ " + str(i-1) +" "+ arr[j-1])
+            diff.append("+^" + str(i) +"^"+ arr[j-1])
         elif i > 0 and (j == 0 or C[i][j-1] < C[i-1][j]):
             createDiff(C, X, Y, i-1, j,arr)
-            diff.append("- " + str(i-1) +"\n")
+            diff.append("-^" + str(i) +"\n")
 
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 5000
@@ -54,12 +54,13 @@ if __name__ == "__main__":
 	    sock.connect((HOST, PORT))
 	    sock.send(data)
 	    received = sock.recv(1024)
+	    print received
 	except:
 		print "Unexpected error:", sys.exec_info()[0]
 	#print data
 	#print received
 	hashlist1=received.split()
-	fp=open('doc1','r')
+	fp=open(data,'r')
 	filelist=[]
 	hashlist2=[]
 	for line in fp:

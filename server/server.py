@@ -1,9 +1,6 @@
 import socket
 import os
 
-#graph plot function
-
-
 if __name__ == "__main__":
 	#creating server socket
 	server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,6 +19,17 @@ if __name__ == "__main__":
 		hashlist.append(str(hash(line)))
 	content=' '.join(hashlist)
 	client_socket.send(content)
-	#client_socket, address = server_socket.accept()
 	diff = client_socket.recv(512)
-	print diff
+	updatelist=diff.splitlines()
+	subsplit=[]
+	for i in range (0,len(updatelist)):
+		subsplit.append(updatelist[i].split('^'))
+	print subsplit
+	for element in subsplit:
+		if element[0]=='-':
+			filelist[int(element[1])]=''
+		elif element[0]=='+':
+			filelist[int(element[1])]=element[2]
+	print filelist
+	finalcontent=''.join(filelist)
+	print finalcontent
